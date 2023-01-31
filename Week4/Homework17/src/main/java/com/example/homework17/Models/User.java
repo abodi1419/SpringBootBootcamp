@@ -3,15 +3,23 @@ package com.example.homework17.Models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "users")
+@Repository
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,10 +40,16 @@ public class User {
     @Email(message = "Email must be in email form")
     private String email;
     @NotNull(message = "Role can not be null!")
+    @Pattern(regexp = "(?:^|\\W)user(?:$|\\W)|(?:^|\\W)admin(?:$|\\W)", message = "Role must be admin or user!")
     @Column(columnDefinition = "varchar(5) check(role='user' or role='admin') not null")
     private String role;
     @NotNull(message = "Age can not be null!")
     @Column(columnDefinition = "int not null")
     private Integer age;
 
+
+
+
 }
+
+
