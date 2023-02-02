@@ -49,10 +49,12 @@ public class BootcampInstructorService {
         bootcampInstructorRepository.deleteAll(bootcampInstructors);
     }
 
-    public List<Instructor> findInstructorsOfBootcamp(Integer bootcampId){
+    public List<Instructor> findInstructorsOfBootcamp(Integer bootcampId, boolean returnNull){
         List<BootcampInstructor> bootcampInstructors = bootcampInstructorRepository.findBootcampInstructorsByBootcampId(bootcampId);
-        if(bootcampInstructors.isEmpty()){
-            throw new ApiException("No instructors assigned to this bootcamp!",404);
+        if(!returnNull) {
+            if (bootcampInstructors.isEmpty()) {
+                throw new ApiException("No instructors assigned to this bootcamp!", 404);
+            }
         }
         List<Integer> ids = new ArrayList<>();
         for (BootcampInstructor b: bootcampInstructors){

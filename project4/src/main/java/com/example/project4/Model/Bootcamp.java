@@ -35,13 +35,13 @@ public class Bootcamp {
     @Temporal(TemporalType.DATE)
     @FutureOrPresent
     @Column(columnDefinition = "date", nullable = false)
-    private Date start_date;
+    private Date startDate;
 
     @NotNull(message = "End date can not be null!")
     @Temporal(TemporalType.DATE)
     @FutureOrPresent
     @Column(columnDefinition = "date", nullable = false)
-    private Date end_date;
+    private Date endDate;
 
     @NotNull(message = "Start time can not be null!")
     @Temporal(TemporalType.TIME)

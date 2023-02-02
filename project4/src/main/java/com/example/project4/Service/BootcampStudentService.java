@@ -36,6 +36,12 @@ public class BootcampStudentService {
         if (studentBootcamp != null)
             throw new ApiException("student with id: "+studentId+" is already registered in a bootcamp.",402);
 
+        List<BootcampStudent> bootcampStudents = bootcampStudentRepository.findBootcampStudentsByBootcampId(bootcampId);
+        if(bootcamp.getCapacity()<= bootcampStudents.size()){
+            throw new ApiException("Bootcamp is already full!", 400);
+        }
+
+
         bootcampStudentRepository.save(new BootcampStudent(bootcampId,studentId));
     }
 
@@ -59,10 +65,12 @@ public class BootcampStudentService {
     }
 
 
-    public List<Student> findStudentsOfBootcamp(Integer bootcampId){
+    public List<Student> findStudentsOfBootcamp(Integer bootcampId, boolean returnNull){
         List<BootcampStudent> bootcampStudents = bootcampStudentRepository.findBootcampStudentsByBootcampId(bootcampId);
-        if(bootcampStudents.isEmpty()){
-            throw new ApiException("No students assigned to this bootcamp!",404);
+        if(!returnNull) {
+            if (bootcampStudents.isEmpty()) {
+                throw new ApiException("No students assigned to this bootcamp!", 404);
+            }
         }
         List<Integer> ids = new ArrayList<>();
         for (BootcampStudent b: bootcampStudents){
@@ -73,6 +81,10 @@ public class BootcampStudentService {
 
     public Bootcamp findBootcampOfStudent(Integer studentId){
         BootcampStudent bootcampStudent = bootcampStudentRepository.findBootcampStudentByStudentId(studentId);
+
+        if(studentRepository.findStudentById(studentId)==null){
+            throw new ApiException("Student not found!",404);
+        }
         if(bootcampStudent == null){
             throw new ApiException("You are not assigned to any bootcamp!",404);
         }

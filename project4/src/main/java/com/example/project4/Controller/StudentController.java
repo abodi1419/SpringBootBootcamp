@@ -60,12 +60,12 @@ public class StudentController {
         return ResponseEntity.status(200).body(studentService.getBootcamp(studentId));
     }
 
-    @GetMapping("/get/students/{age}")
+    @GetMapping("/get/age/{age}")
     public ResponseEntity getStudentsWith(@PathVariable Integer age){
         return ResponseEntity.status(200).body(studentService.getAllStudentAbove(age));
     }
 
-    @GetMapping("/get/students/{major}")
+    @GetMapping("/get/major/{major}")
     public ResponseEntity getStudentsWith(@PathVariable String major){
         return ResponseEntity.status(200).body(studentService.getAllStudentWith(major));
     }

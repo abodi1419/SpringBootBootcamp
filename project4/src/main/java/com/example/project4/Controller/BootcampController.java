@@ -31,13 +31,13 @@ public class BootcampController {
 
     @GetMapping("/get/instructors/{id}")
     public ResponseEntity getBootcampInstructors(@PathVariable Integer id){
-        List<Instructor> instructors = bootcampService.getInstructors(id);
+        List<Instructor> instructors = bootcampService.getInstructors(id,false);
         return ResponseEntity.status(200).body(instructors);
     }
 
     @GetMapping("/get/students/{id}")
     public ResponseEntity getBootcampStudents(@PathVariable Integer id){
-        List<Student> students = bootcampService.getStudents(id);
+        List<Student> students = bootcampService.getStudents(id,false);
         return ResponseEntity.status(200).body(students);
     }
 
@@ -65,10 +65,17 @@ public class BootcampController {
         return ResponseEntity.status(200).body("Updated successfully");
 
     }
+
+    @PutMapping("get/running")
+    public ResponseEntity getRunningBootcamps(){
+        return ResponseEntity.status(200).body(bootcampService.getRunning());
+
+    }
     @DeleteMapping("delete/{id}")
     public ResponseEntity deleteBootcamp(@PathVariable Integer id){
         bootcampService.deleteBootcamp(id);
         return ResponseEntity.status(200).body("Deleted successfully");
     }
+
 
 }

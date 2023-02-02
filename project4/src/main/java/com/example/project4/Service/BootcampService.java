@@ -10,6 +10,7 @@ import com.example.project4.Repository.BootcampStudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -18,6 +19,8 @@ public class BootcampService {
     private final BootcampRepository bootcampRepository;
     private final BootcampInstructorService bootcampInstructorService;
     private final BootcampStudentService bootcampStudentService;
+
+
 
 
     public List<Bootcamp> getAll(){
@@ -54,6 +57,8 @@ public class BootcampService {
         bootcampRepository.save(bootcamp);
     }
 
+
+
     public void deleteBootcamp(Integer id){
         Bootcamp bootcamp = bootcampRepository.findBootcampById(id);
         if(bootcamp ==null){
@@ -73,18 +78,23 @@ public class BootcampService {
         return bootcamps;
     }
 
-    public List<Instructor> getInstructors(Integer bootcampId){
-        return bootcampInstructorService.findInstructorsOfBootcamp(bootcampId);
+    public List<Instructor> getInstructors(Integer bootcampId, boolean returnNull){
+        return bootcampInstructorService.findInstructorsOfBootcamp(bootcampId,returnNull);
     }
 
-    public List<Student> getStudents(Integer bootcampId){
-        return bootcampStudentService.findStudentsOfBootcamp(bootcampId);
+    public List<Bootcamp> getRunning(){
+        Date date  = new Date();
+        return bootcampRepository.findBootcampsByStart_dateGreaterThanEqualAndEnd_dateLessThan(date);
+    }
+
+    public List<Student> getStudents(Integer bootcampId, boolean returnNull){
+        return bootcampStudentService.findStudentsOfBootcamp(bootcampId, returnNull);
     }
 
     public BootcampInfo getInfo(Integer bootcampId){
         Bootcamp bootcamp = findById(bootcampId);
-        List<Instructor> instructors = getInstructors(bootcampId);
-        List<Student> students = getStudents(bootcampId);
+        List<Instructor> instructors = getInstructors(bootcampId,true);
+        List<Student> students = getStudents(bootcampId,true);
         return new BootcampInfo(bootcamp,instructors,students);
     }
 

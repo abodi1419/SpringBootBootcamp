@@ -9,11 +9,18 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.sql.SQLIntegrityConstraintViolationException;
 
 @ControllerAdvice
 public class AdviceController {
+
+
+    @ExceptionHandler(value = MethodArgumentTypeMismatchException.class)
+    public ResponseEntity methodArgumentTypeMismatch(MethodArgumentTypeMismatchException e){
+        return ResponseEntity.status(400).body(new ApiResponse(e.getMessage()));
+    }
     @ExceptionHandler(value = ApiException.class)
     public ResponseEntity myApi(ApiException e){
         return ResponseEntity.status(e.getStatus()).body(new ApiResponse(e.getMessage()));

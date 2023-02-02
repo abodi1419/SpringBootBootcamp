@@ -13,5 +13,7 @@ public interface StudentRepository extends JpaRepository<Student,Integer> {
     @Query("select student from Student student where student.age > ?1")
     List<Student> findStudentByAge(Integer age);
 
+    Student findStudentById(Integer id);
+
     List<Student> findStudentByMajor(String major);
 }
