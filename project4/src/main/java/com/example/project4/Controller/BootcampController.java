@@ -3,6 +3,7 @@ package com.example.project4.Controller;
 import com.example.project4.Model.Bootcamp;
 import com.example.project4.Model.BootcampInfo;
 import com.example.project4.Model.Instructor;
+import com.example.project4.Model.Student;
 import com.example.project4.Service.BootcampService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,12 @@ public class BootcampController {
         return ResponseEntity.status(200).body(instructors);
     }
 
+    @GetMapping("/get/students/{id}")
+    public ResponseEntity getBootcampStudents(@PathVariable Integer id){
+        List<Student> students = bootcampService.getStudents(id);
+        return ResponseEntity.status(200).body(students);
+    }
+
     @GetMapping("/get/info/{id}")
     public ResponseEntity getBootcampInfo(@PathVariable Integer id){
         BootcampInfo bootcampInfo = bootcampService.getInfo(id);
@@ -51,8 +58,6 @@ public class BootcampController {
         bootcampService.addBootcamp(bootcamp);
         return ResponseEntity.status(200).body("Bootcamp added");
     }
-
-
 
     @PutMapping("update/{id}")
     public ResponseEntity updateBootcamp(@PathVariable Integer id, @RequestBody @Valid Bootcamp bootcamp){

@@ -9,5 +9,5 @@ import java.util.List;
 public class BootcampInfo {
     private Bootcamp bootcamp;
     private List<Instructor> instructors;
-    // private List<Student> students;
+    private List<Student> students;
 }

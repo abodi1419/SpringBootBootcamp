@@ -4,7 +4,9 @@ import com.example.project4.Exception.ApiException;
 import com.example.project4.Model.Bootcamp;
 import com.example.project4.Model.BootcampInfo;
 import com.example.project4.Model.Instructor;
+import com.example.project4.Model.Student;
 import com.example.project4.Repository.BootcampRepository;
+import com.example.project4.Repository.BootcampStudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,7 @@ import java.util.List;
 public class BootcampService {
     private final BootcampRepository bootcampRepository;
     private final BootcampInstructorService bootcampInstructorService;
+    private final BootcampStudentService bootcampStudentService;
 
 
     public List<Bootcamp> getAll(){
@@ -42,9 +45,6 @@ public class BootcampService {
     }
 
 
-
-
-
     public void updateBootcamp(Integer id, Bootcamp bootcamp){
         Bootcamp oldBootcamp = bootcampRepository.findBootcampById(id);
         if(oldBootcamp ==null){
@@ -60,6 +60,7 @@ public class BootcampService {
             throw new ApiException("Bootcamp not found!",404);
         }
         bootcampInstructorService.deleteByBootcampId(id);
+        bootcampStudentService.deleteByBootcampId(id);
         bootcampRepository.delete(bootcamp);
     }
 
@@ -76,10 +77,15 @@ public class BootcampService {
         return bootcampInstructorService.findInstructorsOfBootcamp(bootcampId);
     }
 
+    public List<Student> getStudents(Integer bootcampId){
+        return bootcampStudentService.findStudentsOfBootcamp(bootcampId);
+    }
+
     public BootcampInfo getInfo(Integer bootcampId){
         Bootcamp bootcamp = findById(bootcampId);
         List<Instructor> instructors = getInstructors(bootcampId);
-        return new BootcampInfo(bootcamp,instructors);
+        List<Student> students = getStudents(bootcampId);
+        return new BootcampInfo(bootcamp,instructors,students);
     }
 
 
