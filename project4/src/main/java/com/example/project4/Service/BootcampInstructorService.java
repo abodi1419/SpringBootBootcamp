@@ -33,7 +33,8 @@ public class BootcampInstructorService {
     }
 
     public void deleteInstructorFromBootcamp(Integer bootcampId, Integer instructorId){
-        BootcampInstructor bootcampInstructor = bootcampInstructorRepository.findBootcampInstructorByBootcampIdAndInstructorId(bootcampId,instructorId);
+        BootcampInstructor bootcampInstructor = bootcampInstructorRepository.
+                findBootcampInstructorByBootcampIdAndInstructorId(bootcampId,instructorId);
         if (bootcampInstructor == null)
             throw new ApiException("The instructor is not assigned the bootcamp!!!",404);
         bootcampInstructorRepository.delete(bootcampInstructor);
