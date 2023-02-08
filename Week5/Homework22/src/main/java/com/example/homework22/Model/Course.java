@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 
 @Entity
 @Data
@@ -26,6 +28,10 @@ public class Course {
     @JoinColumn(name = "teacher_id")
     @JsonIgnore
     private Teacher teacher;
+
+    @ManyToMany(cascade = CascadeType.REMOVE)
+    @JsonIgnore
+    List<Student> students;
 
     public Course(String name, Teacher teacher) {
         this.name = name;

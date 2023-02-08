@@ -4,9 +4,11 @@ package com.example.homework22.Controller;
 
 import com.example.homework22.DTO.AddressDTO;
 import com.example.homework22.DTO.CourseDTO;
+import com.example.homework22.Model.Student;
 import com.example.homework22.Model.Teacher;
 import com.example.homework22.Service.AddressService;
 import com.example.homework22.Service.CourseService;
+import com.example.homework22.Service.StudentService;
 import com.example.homework22.Service.TeacherService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,7 @@ public class TeacherController {
     private final TeacherService teacherService;
     private final AddressService addressService;
     private final CourseService courseService;
+    private final StudentService studentService;
 
     @GetMapping("/get")
     public ResponseEntity getTeachers(){
@@ -28,6 +31,11 @@ public class TeacherController {
     @GetMapping("/get/courses")
     public ResponseEntity getCourses(){
         return ResponseEntity.status(200).body(courseService.getCourses());
+    }
+
+    @GetMapping("/get/students")
+    public ResponseEntity getStudents(){
+        return ResponseEntity.status(200).body(studentService.getStudents());
     }
 
     @GetMapping("/get/id/{id}")
@@ -60,6 +68,14 @@ public class TeacherController {
         return ResponseEntity.status(200).body("Course added!");
     }
 
+    @PostMapping("/add/student")
+    public ResponseEntity addStudent(@RequestBody @Valid Student student){
+        studentService.addStudent(student);
+        return ResponseEntity.status(200).body("Student added!");
+    }
+
+
+
 
 
     @PutMapping("update/{id}")
@@ -76,9 +92,23 @@ public class TeacherController {
 
     }
 
+    @PutMapping("attach/student/{studentId}/course/{courseId}")
+    public ResponseEntity attachStudentToCourse(@PathVariable Integer studentId, @PathVariable Integer courseId){
+        studentService.attach(studentId, courseId);
+        return ResponseEntity.status(200).body("Course attached successfully");
+
+    }
+
     @PutMapping("detach/course/{courseId}")
     public ResponseEntity detachCourseTeacher(@PathVariable Integer courseId){
         courseService.detach(courseId);
+        return ResponseEntity.status(200).body("Course teacher detached successfully");
+
+    }
+
+    @PutMapping("detach/student/{studentId}/course/{courseId}")
+    public ResponseEntity detachCourseStudent(@PathVariable Integer studentId,@PathVariable Integer courseId){
+        studentService.detach(studentId,courseId);
         return ResponseEntity.status(200).body("Course teacher detached successfully");
 
     }
@@ -93,6 +123,20 @@ public class TeacherController {
     @PutMapping("update/course/{id}")
     public ResponseEntity updateCourse(@PathVariable Integer id,@RequestBody @Valid CourseDTO courseDTO){
         courseService.updateCourse(id,courseDTO);
+        return ResponseEntity.status(200).body("Updated successfully");
+
+    }
+
+    @PutMapping("update/student/{id}")
+    public ResponseEntity updateCourse(@PathVariable Integer id,@RequestBody @Valid Student student){
+        studentService.updateStudent(id,student);
+        return ResponseEntity.status(200).body("Updated successfully");
+
+    }
+
+    @PutMapping("update/student/{id}/major/{major}")
+    public ResponseEntity updateStudentMajor(@PathVariable Integer id,@PathVariable String major){
+        studentService.updateStudentMajor(id,major);
         return ResponseEntity.status(200).body("Updated successfully");
 
     }
@@ -111,6 +155,12 @@ public class TeacherController {
     @DeleteMapping("delete/course/{id}")
     public ResponseEntity deleteCourse(@PathVariable Integer id){
         courseService.deleteCourse(id);
+        return ResponseEntity.status(200).body("Deleted successfully");
+    }
+
+    @DeleteMapping("delete/student/{id}")
+    public ResponseEntity deleteStudent(@PathVariable Integer id){
+        studentService.deleteStudent(id);
         return ResponseEntity.status(200).body("Deleted successfully");
     }
 
