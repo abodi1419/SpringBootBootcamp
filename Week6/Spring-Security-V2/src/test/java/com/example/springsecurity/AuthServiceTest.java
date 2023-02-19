@@ -31,8 +31,8 @@ public class AuthServiceTest {
 
     @BeforeEach
     void setUp() {
-        user = new MyUser(null,"aziz","123","ADMIN",null);
-        user1 = new MyUser(null,"khalid","123","CUSTOMER",null);
+        user = new MyUser(null,"Abdullah","123","ADMIN",null);
+        user1 = new MyUser(null,"Ali","123","CUSTOMER",null);
     }
 
     @Test

@@ -32,7 +32,7 @@ public class TodoRepositoryTest {
     List<Todo> todos ;
     @BeforeEach
     void setUp() {
-        user = new MyUser(null,"aziz","123","ADMIN",null);
+        user = new MyUser(null,"Abdullah","123","ADMIN",null);
         authRepository.save(user);
 
         todo1 = new Todo(null,"todo1",user);

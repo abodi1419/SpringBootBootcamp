@@ -23,7 +23,7 @@ public class AuthRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        user = new MyUser(null,"aziz","123","ADMIN",null);
+        user = new MyUser(null,"Abdullah","123","ADMIN",null);
     }
 
     @Test
