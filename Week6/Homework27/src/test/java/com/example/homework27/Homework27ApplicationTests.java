@@ -8,6 +8,7 @@ class Homework27ApplicationTests {
 
 	@Test
 	void contextLoads() {
+
 	}
 
 }

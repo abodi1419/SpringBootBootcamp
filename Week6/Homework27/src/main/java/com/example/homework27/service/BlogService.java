@@ -18,7 +18,7 @@ public class BlogService {
 
 
     public List<Blog> getBlogs(MyUser myUser) {
-        return blogRepository.findAllByMyUserId(myUser.getId());
+        return blogRepository.findBlogsByMyUser(myUser.getId());
     }
 
     public void addBlog(MyUser myUser,Blog blog) {

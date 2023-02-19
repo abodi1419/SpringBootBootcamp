@@ -7,9 +7,13 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Blog {
 
     @Id
@@ -28,4 +32,10 @@ public class Blog {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @JsonIgnore
     private MyUser myUser;
+
+    public Blog(String title, String body, MyUser myUser) {
+        this.title = title;
+        this.body = body;
+        this.myUser = myUser;
+    }
 }

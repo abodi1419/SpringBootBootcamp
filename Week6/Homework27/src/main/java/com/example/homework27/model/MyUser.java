@@ -2,7 +2,9 @@ package com.example.homework27.model;
 
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,6 +15,8 @@ import java.util.List;
 
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class MyUser implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,6 +25,13 @@ public class MyUser implements UserDetails {
     private String username;
     private String password;
     private String role;
+
+    public MyUser(String username, String password, String role, List<Blog> blogs) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+        this.blogs = blogs;
+    }
 
     @OneToMany(cascade = CascadeType.REMOVE ,mappedBy = "myUser")
     private List<Blog> blogs;
